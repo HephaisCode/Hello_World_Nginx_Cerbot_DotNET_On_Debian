@@ -167,6 +167,8 @@ echo '}' >> ${MYNGINXCONFIG}
 
 ln -s ${MYNGINXCONFIG} /etc/nginx/sites-enabled/
 
+sudo nginx -t
+
 systemctl restart nginx
 
 ```
