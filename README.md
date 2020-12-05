@@ -64,6 +64,25 @@ chmod 750 /var/www/html/
 rm /var/www/html/index.html
 echo "<html><body>Are you lost? Ok, I'll help you, you're in front of a screen...</body></html>" > /var/www/html/index.html
 
+DEFAULTNGINXCONFIG=/etc/nginx/sites-available/default
+rm ${DEFAULTNGINXCONFIG}
+
+```
+Configure Default Nginx by Error 444
+
+```
+echo 'server {' >> ${DEFAULTNGINXCONFIG}
+echo '    listen   80 default_server;' >> ${DEFAULTNGINXCONFIG}
+echo '    # listen [::]:80 default_server deferred;' >> ${DEFAULTNGINXCONFIG}
+echo '    return   444;' >> ${DEFAULTNGINXCONFIG}
+echo '}' >> ${DEFAULTNGINXCONFIG}
+
+ln -s ${DEFAULTNGINXCONFIG} /etc/nginx/sites-enabled/
+
+systemctl restart nginx
+
+
+
 ```
 
 Test Nginx 
@@ -145,9 +164,8 @@ echo '  proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;' >> ${MYN
 echo '  proxy_set_header   X-Forwarded-Proto $scheme;' >> ${MYNGINXCONFIG}
 echo ' }' >> ${MYNGINXCONFIG}
 echo '}' >> ${MYNGINXCONFIG}
-systemctl restart nginx
 
-ln -s /etc/nginx/sites-available/${MYDOMAINNAME} /etc/nginx/sites-enabled/
+ln -s ${MYNGINXCONFIG} /etc/nginx/sites-enabled/
 
 systemctl restart nginx
 
