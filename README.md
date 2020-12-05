@@ -7,12 +7,12 @@
 
 ## Objectif 
 
-Create Web Page for **hello-world.hephaiscode.com** with Nginx and HTML File. Access by URL  http://hello-world.hephaiscode.com .
+Create Web Page for **hello.hephaiscode.com** with Nginx and HTML File. Access by URL  http://hello.hephaiscode.com .
 
 ## You need
 
 - Server on Debian (linux distribution) with root access
-- DN (Domain Name) point on Server IP (example hello-world.hephaiscode.com on 51.83.45.10)
+- DN (Domain Name) point on Server IP (example hello.hephaiscode.com.com on 51.83.45.10)
 - Terminal/console to enter instruction
 
 ## Parameters
@@ -110,8 +110,8 @@ apt-get install -y dotnet-runtime-5.0
  ```
  MYUSER=hephaistos
  MYPASSWORD=Gkh23hglxVd47ShG43jh3h
- MYDOMAINNAME=hello-world.hephaiscode.com
- MYEMAIL=hello-world@hephaiscode.com
+ MYDOMAINNAME=hello.hephaiscode.com
+ MYEMAIL=hello@hephaiscode.com
  MYWEBFOLDER=WebSite
  ```
  
@@ -187,7 +187,7 @@ systemctl restart nginx
 ```
 
 
-Open browser and go to page http://hello-world.hephaiscode.com 
+Open browser and go to page http://hello.hephaiscode.com 
 
 ## Add ssl certificat by Certbot
 
@@ -206,9 +206,9 @@ systemctl restart nginx
 
 ## Hello World Test
 
-Open browser and go to page http://hello-world.hephaiscode.com 
+Open browser and go to page http://hello.hephaiscode.com 
 
-Open browser and go to page https://hello-world.hephaiscode.com (certificat is valided by certbot)
+Open browser and go to page https://hello.hephaiscode.com (certificat is valided by certbot)
 
 ## Hello World Success
 
