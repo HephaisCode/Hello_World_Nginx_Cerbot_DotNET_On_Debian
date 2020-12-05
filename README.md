@@ -75,6 +75,14 @@ Open browser and go to page http://51.83.45.10/
 Install DotNET with Nginx
 
 ```
+wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+dpkg -i packages-microsoft-prod.deb
+
+apt-get update
+apt-get install -y apt-transport-https
+apt-get install -y dotnet-sdk-5.0
+apt-get install -y aspnetcore-runtime-5.0
+apt-get install -y dotnet-runtime-5.0
 
 ```
 
@@ -127,7 +135,14 @@ echo " root /home/${MYUSER}/${MYWEBFOLDER};" >> ${MYNGINXCONFIG}
 echo " index index.html index.htm index.nginx-debian.html;" >> ${MYNGINXCONFIG}
 echo " server_name ${MYDOMAINNAME};" >> ${MYNGINXCONFIG}
 echo ' location / {' >> ${MYNGINXCONFIG}
-echo '  try_files $uri $uri/ =404;' >> ${MYNGINXCONFIG}
+echo '  proxy_pass         http://localhost:5000;' >> ${MYNGINXCONFIG}
+echo '  proxy_http_version 1.1;' >> ${MYNGINXCONFIG}
+echo '  proxy_set_header   Upgrade $http_upgrade;' >> ${MYNGINXCONFIG}
+echo '  proxy_set_header   Connection keep-alive;' >> ${MYNGINXCONFIG}
+echo '  proxy_set_header   Host $host;' >> ${MYNGINXCONFIG}
+echo '  proxy_cache_bypass $http_upgrade;' >> ${MYNGINXCONFIG}
+echo '  proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;' >> ${MYNGINXCONFIG}
+echo '  proxy_set_header   X-Forwarded-Proto $scheme;' >> ${MYNGINXCONFIG}
 echo ' }' >> ${MYNGINXCONFIG}
 echo '}' >> ${MYNGINXCONFIG}
 systemctl restart nginx
