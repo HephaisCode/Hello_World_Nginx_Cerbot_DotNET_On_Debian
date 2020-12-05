@@ -131,11 +131,24 @@ Add directory
 ```
 mkdir /home/${MYUSER}/${MYWEBFOLDER}
 
-rm /home/${MYUSER}/${MYWEBFOLDER}/index.html
-echo '<html><body>Hello World!</body></html>' >> /home/${MYUSER}/${MYWEBFOLDER}/index.html
+mkdir /home/${MYUSER}/${MYWEBFOLDER}/Default
+rm /home/${MYUSER}/${MYWEBFOLDER}/Default/index.html
+echo '<html><body>Hello World!</body></html>' >> /home/${MYUSER}/${MYWEBFOLDER}/Default/index.html
 
 chown -R ${MYUSER}:www-data /home/${MYUSER}/${MYWEBFOLDER}
 chmod -R 750 /home/${MYUSER}/${MYWEBFOLDER}
+```
+
+## Create DotNet Application
+
+```
+mkdir /home/${MYUSER}/${MYWEBFOLDER}/App
+cd /home/${MYUSER}/${MYWEBFOLDER}/App
+
+dotnet new webapp
+dotnet build
+dotnet run
+
 ```
 
 ## Install Domain Name
@@ -145,13 +158,13 @@ Create the host parameters for Apache and our domains **hello-world.hephaiscode.
 ```
 
 
-MYNGINXCONFIG=/etc/nginx/sites-available/${MYDOMAINNAME}
+MYNGINXCONFIG=/home/${MYUSER}/${MYWEBFOLDER}/${MYDOMAINNAME}
 rm ${MYNGINXCONFIG}
 echo 'server {' >> ${MYNGINXCONFIG}
 echo " listen 80;" >> ${MYNGINXCONFIG}
-echo " listen [::]:80;" >> ${MYNGINXCONFIG}
-echo " root /home/${MYUSER}/${MYWEBFOLDER};" >> ${MYNGINXCONFIG}
-echo " index index.html index.htm index.nginx-debian.html;" >> ${MYNGINXCONFIG}
+#echo " listen [::]:80;" >> ${MYNGINXCONFIG}
+#echo " root /home/${MYUSER}/${MYWEBFOLDER}/Default;" >> ${MYNGINXCONFIG}
+#echo " index index.html index.htm index.nginx-debian.html;" >> ${MYNGINXCONFIG}
 echo " server_name ${MYDOMAINNAME};" >> ${MYNGINXCONFIG}
 echo ' location / {' >> ${MYNGINXCONFIG}
 echo '  proxy_pass         http://localhost:5000;' >> ${MYNGINXCONFIG}
